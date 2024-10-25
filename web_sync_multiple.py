@@ -15,7 +15,7 @@ def get_content(url):
 # Fonction pour écrire le contenu dans un fichier
 def write_content(content, file):
     try:
-        # Ouvre le fichier en mode écriture (écrasera le fichier s'il existe déjà)
+        # Ouvre le fichier en mode écriture
         with open(file, 'w', encoding='utf-8') as f:
             f.write(content)
         print(f"Contenu écrit dans {file}")
