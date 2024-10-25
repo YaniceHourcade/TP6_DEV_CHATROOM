@@ -8,7 +8,8 @@ async def compter_jusqua_10():
 
 # Lance les deux programmes en simultané
 async def main():
-    await asyncio.gather(compter_jusqua_10(), compter_jusqua_10())
+    await compter_jusqua_10()
+    await compter_jusqua_10()
 
 # Exécution du programme
 if __name__ == "__main__":
