@@ -17,7 +17,7 @@ async def receive_message(reader):
         if not data:
             print("Le serveur a fermé la connexion.")
             break
-        print(f"Le serveur a répondu : {repr(data.decode('utf-8'))}")
+        print(f"Message recu : {repr(data.decode('utf-8'))}")
 
 async def main():
     while True:
