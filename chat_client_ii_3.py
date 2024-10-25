@@ -7,9 +7,10 @@ host = '10.10.10.11'
 port = 13337
 
 async def send_message(writer):
-    message = await aioconsole.ainput("Chat : ")
-    writer.write(message.encode('utf-8'))
-    await writer.drain()
+    while True:
+        message = await aioconsole.ainput("Chat : ")
+        writer.write(message.encode('utf-8'))
+        await writer.drain()
 
 async def receive_message(reader):
     while True:
@@ -17,7 +18,7 @@ async def receive_message(reader):
         if not data:
             print("Le serveur a fermé la connexion.")
             break
-        print(f"Message recu : {repr(data.decode('utf-8'))}")
+        print(f"\nChat recu : {repr(data.decode('utf-8'))}")
 
 async def main():
     while True:
@@ -25,6 +26,7 @@ async def main():
             reader, writer = await asyncio.open_connection(host, port)
             print(f"Connecté avec succès au serveur {host} sur le port {port}")
 
+            # Exécutez l'envoi et la réception en parallèle
             await asyncio.gather(send_message(writer), receive_message(reader))
 
         except Exception as e:
