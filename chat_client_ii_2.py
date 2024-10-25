@@ -24,10 +24,6 @@ async def main():
     print(f"Connecté avec succès au serveur {host} sur le port {port}")
 
     await asyncio.gather(send_message(writer), receive_message(reader))
-    
-    if 'writer' in locals():
-            writer.close()
-            await writer.wait_closed()
 
 if __name__ == '__main__':
     asyncio.run(main())
