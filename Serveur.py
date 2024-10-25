@@ -23,7 +23,7 @@ try:
             message = data.decode('utf-8')  
             print(f"Données reçues du client : {message}")
 
-            response = ("vous venez d'envoyer : " + message)
+            response = (b"vous venez d'envoyer : " + message)
             
             conn.sendall(response)
 
