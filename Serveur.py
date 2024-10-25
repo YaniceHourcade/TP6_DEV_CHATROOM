@@ -23,13 +23,8 @@ try:
             message = data.decode('utf-8')  
             print(f"Données reçues du client : {message}")
 
-            if "meo" in message:
-                response = b"Meo a toi confrere."
-            elif "waf" in message:
-                response = b"ptdr t ki."
-            elif "meo" not in message and "waf" not in message: 
-                response = b"Mes respects humble humain."
-
+            response = ("vous venez d'envoyer : " + message)
+            
             conn.sendall(response)
 
         except socket.error:
