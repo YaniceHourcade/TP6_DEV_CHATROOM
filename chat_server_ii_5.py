@@ -39,7 +39,7 @@ async def handle_client(reader, writer):
                 break 
 
             message = data.decode('utf-8')
-            print(f"{addr[0]}:{addr[1]} a dit : {message}")
+            print(f"{addr[0]} a dit : {message}")
         
             # Envoi du message à tous les autres clients
             for client_addr, client in CLIENTS.items():
@@ -53,15 +53,3 @@ async def handle_client(reader, writer):
         print(f"Connexion fermée pour {addr}")
         writer.close()  # Ferme la connexion
         del CLIENTS[addr]  # Retire le client de CLIENTS
-
-async def main():
-    server = await asyncio.start_server(handle_client, host, port)
-
-    addr = server.sockets[0].getsockname()
-    print(f'Serveur en cours d\'exécution sur {addr[0]}:{addr[1]}')
-
-    async with server:
-        await server.serve_forever()  # Maintient le serveur en cours d'exécution
-
-if __name__ == '__main__':
-    asyncio.run(main())
