@@ -14,7 +14,7 @@ async def handle_client(reader, writer):
 
         message = data.decode('utf-8')
 
-        response = "Message received from {addr[0]}:{addr[1]} : {message}"
+        response = f"Message received from {addr[0]}:{addr[1]} : {message}"
         print(response)
 
     print(f"Connexion fermée pour {addr}")
