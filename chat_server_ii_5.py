@@ -15,7 +15,7 @@ async def handle_client(reader, writer):
         return
 
     # Stocker le client dans CLIENTS
-    CLIENTS[addr] = {"r": reader, "w": writer}
+    CLIENTS[addr] = {"r": reader, "w": writer, "pseudo": None}
     
     try:            
         data = await reader.read(1024)
@@ -23,12 +23,13 @@ async def handle_client(reader, writer):
 
         if message.startswith("Hello|"):
             pseudo = message.split('|')[1]  # Isoler le pseudo
-            CLIENTS[addr][pseudo] = pseudo  # Stocker le pseudo
+            CLIENTS[addr]["pseudo"] = pseudo  # Stocker le pseudo
             print(f"Le pseudo du client {addr} est : {pseudo}")
             
+            # Annonce à tous les autres clients
             for client_addr, client in CLIENTS.items():
                 if client_addr != addr:  # Ne pas envoyer au client qui vient de se connecter
-                    response = f"Annonce : {pseudo} a rejoint la chatroom"
+                    response = f"Annonce : {pseudo} a rejoint la chatroom\n"
                     client["w"].write(response.encode('utf-8'))
                     await client["w"].drain()
         
@@ -42,9 +43,9 @@ async def handle_client(reader, writer):
         
             # Envoi du message à tous les autres clients
             for client_addr, client in CLIENTS.items():
-                if client_addr != addr:  # Ne pas envoyer au client qui a envoyé le message
-                    pseudo = CLIENTS[addr][pseudo]  # Récupérer le pseudo
-                    response = f"{pseudo} a dit : {message}"
+                if client_addr != addr and CLIENTS[client_addr]["pseudo"]:  # Ne pas envoyer au client qui a envoyé le message
+                    pseudo = CLIENTS[addr]["pseudo"]  # Récupérer le pseudo
+                    response = f"{pseudo} a dit : {message}\n"
                     client["w"].write(response.encode('utf-8'))
                     await client["w"].drain()
 
@@ -63,4 +64,4 @@ async def main():
         await server.serve_forever()  # Maintient le serveur en cours d'exécution
 
 if __name__ == '__main__':
-    asyncio.run(main()) 
+    asyncio.run(main())
