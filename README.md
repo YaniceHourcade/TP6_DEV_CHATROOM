@@ -5,3 +5,5 @@
 🌞 sleep_and_print.py
 
 🌞 sleep_and_print_async.py
+
+🌞 web_sync.py
