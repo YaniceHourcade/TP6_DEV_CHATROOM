@@ -1,12 +1,13 @@
 import socket
 import sys
 import asyncio
+import aioconsole
 
 host = '10.10.10.11'
 port = 13337
 
 async def send_message(writer):
-    message = await aioconsole.input("Entrez votre message : ")
+    message = await aioconsole. input("Entrez votre message : ")
     writer.write(message.encode('utf-8'))
     await writer.drain()
 
