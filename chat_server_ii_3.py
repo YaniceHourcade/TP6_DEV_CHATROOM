@@ -14,9 +14,8 @@ async def handle_client(reader, writer):
 
         message = data.decode('utf-8')
 
-        response = f"Message received from {addr[0]}:{addr[1]} : {message}"
-        writer.write(response.encode('utf-8'))  # Envoie la réponse au client
-        await writer.drain()  # Assure que les données sont envoyées
+        response = "Message received from {addr[0]}:{addr[1]} : {message}"
+        print(response)
 
     print(f"Connexion fermée pour {addr}")
     writer.close()  # Ferme la connexion
