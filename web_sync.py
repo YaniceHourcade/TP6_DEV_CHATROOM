@@ -1,5 +1,5 @@
 import sys
-import requests # type: ignore
+import requests
 
 # Fonction pour récupérer le contenu de la page web
 def get_content(url):
