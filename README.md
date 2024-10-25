@@ -63,3 +63,5 @@ Contenu écrit dans /tmp/www.reddit.com.html
 Contenu écrit dans /tmp/www.weather.com.html
 Temps écoulé : 1.22 secondes
 ```
+
+## II. Chat room
