@@ -2,6 +2,7 @@ import sys
 import aiohttp
 import asyncio
 import os
+import time
 
 # Fonction asynchrone pour récupérer le contenu de la page web
 async def get_content(session, url):
@@ -24,6 +25,8 @@ def write_content(content, file):
 
 # Fonction principale pour gérer l'argument du chemin de fichier contenant les URLs
 async def main():
+    start_time = time.time()
+
     if len(sys.argv) != 2:
         print("Usage : python web_sync.py <chemin_fichier_urls>")
         sys.exit(1)
@@ -57,5 +60,8 @@ async def main():
                 output_file_path = f"/tmp/{filename}.html"  # Assurez-vous que le fichier a l'extension HTML
                 write_content(content, output_file_path)
 
+    end_time = time.time()  # Arrête le chronomètre
+    elapsed_time = end_time - start_time  # Calcule le temps écoulé
+    print(f"Temps écoulé : {elapsed_time:.2f} secondes")  # Affiche le temps écoulé
 if __name__ == "__main__":
     asyncio.run(main())
