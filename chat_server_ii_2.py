@@ -8,9 +8,9 @@ async def handle_client(reader, writer):
     print(f"Un client vient de se connecter avec l'IP {addr[0]} et le port {addr[1]}")
 
     while True:
-        data = await reader.read(1024)  # Lit jusqu'à 100 octets
+        data = await reader.read(1024)
         if not data:
-            break  # Si aucune donnée n'est reçue, on sort de la boucle
+            break 
 
         message = data.decode('utf-8')
         print(f"Données reçues du client : {message}")
