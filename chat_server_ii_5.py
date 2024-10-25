@@ -44,6 +44,7 @@ async def handle_client(reader, writer):
             # Envoi du message à tous les autres clients
             for client_addr, client in CLIENTS.items():
                 if client_addr != addr and CLIENTS[client_addr][pseudo]:  # Ne pas envoyer au client qui a envoyé le message
+                    pseudo = CLIENTS[addr][pseudo]  # Récupérer le pseudo
                     response = f"{pseudo} a dit : {message}\n"  # Utiliser le pseudo dans la réponse
                     client["w"].write(response.encode('utf-8'))
                     await client["w"].drain()
