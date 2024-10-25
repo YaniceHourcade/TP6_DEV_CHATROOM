@@ -23,7 +23,7 @@ async def handle_client(reader, writer):
 
         if message.startswith("Hello|"):
             pseudo = message.split('|')[1]  # Isoler le pseudo
-            CLIENTS[addr]["pseudo"] = pseudo  # Stocker le pseudo
+            CLIENTS[addr][pseudo] = pseudo  # Stocker le pseudo
             print(f"Le pseudo du client {addr} est : {pseudo}")
             
             # Annonce à tous les autres clients
@@ -43,9 +43,9 @@ async def handle_client(reader, writer):
         
             # Envoi du message à tous les autres clients
             for client_addr, client in CLIENTS.items():
-                if client_addr != addr and CLIENTS[client_addr]["pseudo"]:  # Ne pas envoyer au client qui a envoyé le message
+                if client_addr != addr and CLIENTS[client_addr][pseudo]:  # Ne pas envoyer au client qui a envoyé le message
                     print(CLIENTS[addr][pseudo])
-                    pseudo = CLIENTS[addr]["pseudo"]  # Récupérer le pseudo
+                    pseudo = CLIENTS[addr][pseudo]  # Récupérer le pseudo
                     response = f"{pseudo} a dit : {message}\n"  # Utiliser le pseudo dans la réponse
                     client["w"].write(response.encode('utf-8'))
                     await client["w"].drain()
