@@ -26,6 +26,8 @@ async def receive_message(reader):
                 print("Le serveur a fermé la connexion.")
                 break
             print(f"\nChat recu : {repr(data.decode('utf-8'))}")
+    except Exception as e:
+        print(f"Erreur de réception de message : {e}")
     finally:
         print("Fermeture de la connexion...")
         writer.close()
@@ -35,13 +37,17 @@ async def receive_message(reader):
 
 async def main():
     while True:
-        reader, writer = await asyncio.open_connection(host, port)
-        print(f"Connecté avec succès au serveur {host} sur le port {port}")
+        try:
+            reader, writer = await asyncio.open_connection(host, port)
+            print(f"Connecté avec succès au serveur {host} sur le port {port}")
 
-        await send_pseudo(writer)
-        # Exécutez l'envoi et la réception en parallèle
-        await asyncio.gather(send_message(writer), receive_message(reader))
+            await send_pseudo(writer)
+            # Exécutez l'envoi et la réception en parallèle
+            await asyncio.gather(send_message(writer), receive_message(reader))
 
+        except Exception as e:
+            print(f"Erreur de connexion")
+            writer.close()
 
 if __name__ == '__main__':
     asyncio.run(main())
