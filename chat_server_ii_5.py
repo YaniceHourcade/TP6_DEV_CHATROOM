@@ -24,7 +24,7 @@ async def handle_client(reader, writer):
         if message.startswith("Hello|"):
             pseudo = message.split('|')[1]  # Isoler le pseud
             CLIENTS[addr][pseudo] = pseudo  # Stocker le pseudo
-            print(f"Le pseudo du client {addr} est : {pseudo}")
+            print(f"{pseudo} a rejoint la room")
             
             # Annonce à tous les autres clients
             for client_addr, client in CLIENTS.items():
