@@ -26,8 +26,6 @@ async def receive_message(reader):
                 print("Le serveur a fermé la connexion.")
                 break
             print(f"\nChat recu : {repr(data.decode('utf-8'))}")
-    except Exception as e:
-        print(f"Erreur de réception de message : {e}")
     finally:
         print("Fermeture de la connexion...")
         writer.close()
