@@ -19,12 +19,21 @@ async def send_message(writer):
         await writer.drain()
 
 async def receive_message(reader):
-    while True:
-        data = await reader.read(1024)
-        if not data:
-            print("Le serveur a fermé la connexion.")
-            sys.exit(0)
-        print(f"\nChat recu : {repr(data.decode('utf-8'))}")
+    try:
+        while True:
+            data = await reader.read(1024)
+            if not data:
+                print("Le serveur a fermé la connexion.")
+                break
+            print(f"\nChat recu : {repr(data.decode('utf-8'))}")
+    except Exception as e:
+        print(f"Erreur de réception de message : {e}")
+    finally:
+        print("Fermeture de la connexion...")
+        writer.close()
+        await writer.wait_closed()
+        print("Connexion fermée. Au revoir!")
+        sys.exit(0)
 
 async def main():
     while True:
