@@ -23,7 +23,7 @@ async def receive_message(reader):
         data = await reader.read(1024)
         if not data:
             print("Le serveur a fermé la connexion.")
-            break
+            sys.exit(0)
         print(f"\nChat recu : {repr(data.decode('utf-8'))}")
 
 async def main():

@@ -51,7 +51,7 @@ async def handle_client(reader, writer):
 
     finally:
         pseudo = CLIENTS[addr]["pseudo"]
-        print(f"Connexion fermée pour {addr}")
+        print(f"Connexion fermée pour {pseudo}")
         
         del CLIENTS[addr]
 
