@@ -34,6 +34,7 @@ async def receive_message(reader):
         await writer.wait_closed()
         print("Connexion fermée. Au revoir!")
         sys.exit(0)
+        break
 
 async def main():
     while True:
@@ -47,7 +48,7 @@ async def main():
 
         except Exception as e:
             print(f"Erreur de connexion")
-            writer.close()
+            break
 
 if __name__ == '__main__':
     asyncio.run(main())
