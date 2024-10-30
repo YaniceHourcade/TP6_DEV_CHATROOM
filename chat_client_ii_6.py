@@ -35,17 +35,13 @@ async def receive_message(reader):
 
 async def main():
     while True:
-        try:
-            reader, writer = await asyncio.open_connection(host, port)
-            print(f"Connecté avec succès au serveur {host} sur le port {port}")
+        reader, writer = await asyncio.open_connection(host, port)
+        print(f"Connecté avec succès au serveur {host} sur le port {port}")
 
-            await send_pseudo(writer)
-            # Exécutez l'envoi et la réception en parallèle
-            await asyncio.gather(send_message(writer), receive_message(reader))
+        await send_pseudo(writer)
+        # Exécutez l'envoi et la réception en parallèle
+        await asyncio.gather(send_message(writer), receive_message(reader))
 
-        except Exception as e:
-            print(f"Erreur de connexion : {e}. Réessai en 5 secondes...")
-            await asyncio.sleep(5)
 
 if __name__ == '__main__':
     asyncio.run(main())
