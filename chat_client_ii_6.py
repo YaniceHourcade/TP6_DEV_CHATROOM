@@ -30,9 +30,6 @@ async def receive_message(reader):
         print(f"Erreur de réception de message : {e}")
     finally:
         print("Fermeture de la connexion...")
-        writer.close()
-        await writer.wait_closed()
-        print("Connexion fermée. Au revoir!")
         sys.exit(0)
 
 async def main():
