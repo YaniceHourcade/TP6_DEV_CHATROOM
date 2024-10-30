@@ -39,7 +39,7 @@ async def handle_client(reader, writer):
                 break 
 
             message = data.decode('utf-8')
-            print(f"{addr[0]}:{addr[1]} a dit : {message}")
+            print(f"{pseudo} a dit : {message}")
         
             # Envoi du message à tous les autres clients
             for client_addr, client in CLIENTS.items():
