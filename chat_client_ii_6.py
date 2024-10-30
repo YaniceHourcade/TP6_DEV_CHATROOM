@@ -1,23 +1,25 @@
 from csv import writer
-import socket
 import sys
 import asyncio
-import aioconsole # type: ignore
+import aioconsole  # type: ignore
 
-host = '10.10.10.11'
-port = 13337
+HOST = "10.10.10.11"
+PORT = 13337
+
 
 async def send_pseudo(writer):
     input = await aioconsole.ainput("Votre Pseudo : ")
-    message = "Hello|"+input
-    writer.write(message.encode('utf-8'))
+    message = "Hello|" + input
+    writer.write(message.encode("utf-8"))
     await writer.drain()
-    
+
+
 async def send_message(writer):
     while True:
         message = await aioconsole.ainput("Chat : ")
-        writer.write(message.encode('utf-8'))
+        writer.write(message.encode("utf-8"))
         await writer.drain()
+
 
 async def receive_message(reader):
     try:
@@ -36,11 +38,12 @@ async def receive_message(reader):
         print("Connexion fermée. Au revoir!")
         sys.exit(0)
 
+
 async def main():
     while True:
         try:
-            reader, writer = await asyncio.open_connection(host, port)
-            print(f"Connecté avec succès au serveur {host} sur le port {port}")
+            reader, writer = await asyncio.open_connection(HOST, PORT)
+            print(f"Connecté avec succès au serveur {HOST} sur le port {PORT}")
 
             await send_pseudo(writer)
             # Exécutez l'envoi et la réception en parallèle
@@ -50,5 +53,6 @@ async def main():
             print(f"Erreur de connexion")
             break
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     asyncio.run(main())
