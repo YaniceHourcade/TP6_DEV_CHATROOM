@@ -22,7 +22,7 @@ async def handle_client(reader, writer):
         message = data.decode('utf-8')
 
         if message.startswith("Hello|"):
-            pseudo = message.split('|')[1]  # Isoler le pseudo
+            pseudo = message.split('|')[1]  # Isoler le pseud
             CLIENTS[addr][pseudo] = pseudo  # Stocker le pseudo
             print(f"Le pseudo du client {addr} est : {pseudo}")
             
