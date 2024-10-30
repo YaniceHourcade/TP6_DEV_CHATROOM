@@ -34,7 +34,6 @@ async def receive_message(reader):
         await writer.wait_closed()
         print("Connexion fermée. Au revoir!")
         sys.exit(0)
-        break
 
 async def main():
     while True:
