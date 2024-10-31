@@ -1,7 +1,6 @@
 from csv import writer
 import sys
 import asyncio
-import aiconsole
 import os
 import logging
 
