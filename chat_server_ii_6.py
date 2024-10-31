@@ -10,11 +10,6 @@ async def handle_client(reader, writer):
     addr = writer.get_extra_info("peername")
     print(f"Un client vient de se connecter avec l'IP {addr[0]} et le port {addr[1]}")
 
-    if addr in CLIENTS:
-        print(f"Le client {addr} est déjà connecté.")
-        writer.close()  # Ferme la connexion si le client est déjà connecté
-        return
-
     # Stocker le client dans CLIENTS
     CLIENTS[addr] = {"r": reader, "w": writer, "pseudo": None}
 
