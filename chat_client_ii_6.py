@@ -1,5 +1,4 @@
 from csv import writer
-import datetime
 import sys
 import asyncio
 import aioconsole  # type: ignore
@@ -16,18 +15,13 @@ async def send_pseudo(writer):
 
 
 async def send_message(writer):
-    try :
-        while True:
-            time = datetime.datetime.now().strftime("%H:%M:%S")
-            input = await aioconsole.ainput("Chat : ")
-            message = input + time
-            writer.write(message.encode("utf-8"))
-            await writer.drain()
-    except asyncio.CancelledError:
-        pass
+    while True:
+        message = await aioconsole.ainput("Chat : ")
+        writer.write(message.encode("utf-8"))
+        await writer.drain()
 
 
-async def receive_message(reader, writer):
+async def receive_message(reader):
     try:
         while True:
             data = await reader.read(1024)
@@ -35,13 +29,14 @@ async def receive_message(reader, writer):
                 print("Le serveur a fermé la connexion.")
                 break
             print(f"\nChat recu : {repr(data.decode('utf-8'))}")
-    except asyncio.CancelledError:
-        pass
+    except Exception as e:
+        print(f"Erreur de réception de message : {e}")
     finally:
         print("Fermeture de la connexion...")
         writer.close()
         await writer.wait_closed()
         print("Connexion fermée. Au revoir!")
+        sys.exit(0)
 
 
 async def main():
@@ -52,19 +47,12 @@ async def main():
 
             await send_pseudo(writer)
             # Exécutez l'envoi et la réception en parallèle
-            send_task = asyncio.create_task(send_message(writer))
-            receive_task = asyncio.create_task(receive_message(reader, writer))
+            await asyncio.gather(send_message(writer), receive_message(reader))
 
-            send_task.cancel()
-            receive_task.cancel()
-            await asyncio.gather(send_task, receive_task, return_exceptions=True)
-            break  # Exit the loop on disconnection
         except Exception as e:
-            print(f"Erreur de connexion: {e}")
+            print(f"Erreur de connexion")
             break
 
+
 if __name__ == "__main__":
-    try:
-        asyncio.run(main())
-    except KeyboardInterrupt:
-        print("\nProgramme interrompu.")
+    asyncio.run(main())
