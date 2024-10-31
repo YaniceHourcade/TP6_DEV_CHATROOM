@@ -1,4 +1,5 @@
 from csv import writer
+import datetime
 import sys
 import asyncio
 import aioconsole  # type: ignore
@@ -16,7 +17,9 @@ async def send_pseudo(writer):
 
 async def send_message(writer):
     while True:
-        message = await aioconsole.ainput("Chat : ")
+        time = datetime.now()
+        input = await aioconsole.ainput("Chat : ")
+        message = input + time
         writer.write(message.encode("utf-8"))
         await writer.drain()
 
