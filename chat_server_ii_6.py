@@ -45,6 +45,7 @@ async def handle_client(reader, writer):
             for client_addr, client in CLIENTS.items():
                 pseudo = CLIENTS[addr]["pseudo"]
                 time = datetime.datetime.now().strftime("%H:%M")
+                print(time)
                 if client_addr != addr:  # Ne pas envoyer au client qui a envoyé le message
                     response = f"{time} {pseudo} a dit : {message}\n"  # Utiliser le pseudo dans la réponse
                     client["w"].write(response.encode("utf-8"))
