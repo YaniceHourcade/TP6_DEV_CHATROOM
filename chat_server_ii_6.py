@@ -17,15 +17,14 @@ async def handle_client(reader, writer):
     try:
         data = await reader.read(1024)
         message = data.decode("utf-8")
+        time = datetime.datetime.now().strftime("%H:%M")
 
         if message.startswith("Hello|"):
             pseudo = message.split("|")[1]  # Isoler le pseud
             CLIENTS[addr]["pseudo"] = pseudo  # Stocker le pseudo
-            print(f"{pseudo} a rejoint la room")
+            print(f"{pseudo} a rejoint la room à {time}")
 
             # Annonce à tous les autres clients
-            time = datetime.datetime.now().strftime("%H:%M")
-            print(time)
             for client_addr, client in CLIENTS.items():
                 if (
                     client_addr != addr
