@@ -25,6 +25,7 @@ async def handle_client(reader, writer):
 
             # Annonce à tous les autres clients
             time = datetime.datetime.now().strftime("%H:%M")
+            print(time = "coucou")
             for client_addr, client in CLIENTS.items():
                 if (
                     client_addr != addr
