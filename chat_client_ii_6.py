@@ -38,7 +38,7 @@ logging.basicConfig(filename=LOG_FILE, level=logging.INFO, format='%(asctime)s -
 
 
 async def send_pseudo(writer):
-    input = await aioconsole.ainput("Votre Pseudo : ")
+    input = await input("Votre Pseudo : ")
     logging.info(f"Pseudo utilisé : {input}")
     message = "Hello|" + input
     writer.write(message.encode("utf-8"))
@@ -47,7 +47,7 @@ async def send_pseudo(writer):
 
 async def send_message(writer):
     while True:
-        message = await aioconsole.ainput("Chat : ")
+        message = await input("Chat : ")
         logging.info(f"Message envoyer : {message}")
         writer.write(message.encode("utf-8"))
         await writer.drain()
