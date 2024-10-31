@@ -25,12 +25,11 @@ async def handle_client(reader, writer):
 
             # Annonce à tous les autres clients
             time = datetime.datetime.now().strftime("%H:%M")
-            print(time = "coucou")
             for client_addr, client in CLIENTS.items():
                 if (
                     client_addr != addr
                 ):  # Ne pas envoyer au client qui vient de se connecter
-                    response = f"Annonce : {pseudo} a rejoint la chatroom à " + time + "\n"
+                    response = f"Annonce : {pseudo} a rejoint la chatroom à {time}\n"
                     client["w"].write(response.encode("utf-8"))
                     await client["w"].drain()
 
@@ -47,7 +46,7 @@ async def handle_client(reader, writer):
                 pseudo = CLIENTS[addr]["pseudo"]
                 time = datetime.datetime.now().strftime("%H:%M")
                 if client_addr != addr:  # Ne pas envoyer au client qui a envoyé le message
-                    response = time + f"{pseudo} a dit : {message}\n"  # Utiliser le pseudo dans la réponse
+                    response = f"{time} {pseudo} a dit : {message}\n"  # Utiliser le pseudo dans la réponse
                     client["w"].write(response.encode("utf-8"))
                     await client["w"].drain()
 
