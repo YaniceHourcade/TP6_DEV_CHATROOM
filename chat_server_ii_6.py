@@ -109,9 +109,19 @@ async def main():
     logging.info(f"Serveur démarré sur {HOST}:{PORT}")
     print(f"Serveur en cours d'exécution sur {addr[0]}:{addr[1]}")
 
-    async with server:
-        await server.serve_forever()  # Maintient le serveur en cours d'exécution
-
+    try:
+        async with server:
+            await server.serve_forever()  # Maintient le serveur en cours d'exécution
+    except KeyboardInterrupt:
+        print("Arrêt du serveur par l'utilisateur.")
+        logging.info("Serveur arrêté par l'utilisateur.")
+    finally:
+        server.close()
+        await server.wait_closed()
+        print("Le serveur est fermé.")
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("Le serveur a été interrompu.")
