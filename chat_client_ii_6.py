@@ -17,14 +17,14 @@ async def send_pseudo(writer):
 
 async def send_message(writer):
     while True:
-        time = datetime.now()
+        time = datetime.datetime.now().strftime("%H:%M:%S")
         input = await aioconsole.ainput("Chat : ")
         message = input + time
         writer.write(message.encode("utf-8"))
         await writer.drain()
 
 
-async def receive_message(reader):
+async def receive_message(reader, writer):
     try:
         while True:
             data = await reader.read(1024)
@@ -50,7 +50,7 @@ async def main():
 
             await send_pseudo(writer)
             # Exécutez l'envoi et la réception en parallèle
-            await asyncio.gather(send_message(writer), receive_message(reader))
+            await asyncio.gather(send_message(writer), receive_message(reader, writer))
 
         except Exception as e:
             print(f"Erreur de connexion")
