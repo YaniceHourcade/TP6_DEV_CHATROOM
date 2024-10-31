@@ -55,7 +55,7 @@ async def main():
             send_task = asyncio.create_task(send_message(writer))
             receive_task = asyncio.create_task(receive_message(reader, writer))
 
-        send_task.cancel()
+            send_task.cancel()
             receive_task.cancel()
             await asyncio.gather(send_task, receive_task, return_exceptions=True)
             break  # Exit the loop on disconnection
